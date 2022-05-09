@@ -60,9 +60,11 @@ class GoogleTSPReader(object):
             
             # Convert node coordinates to required format
             nodes_coord = []
-            for idx in range(0, 2 * self.num_nodes, 2):
-                nodes_coord.append([float(line[idx]), float(line[idx + 1])])
-            
+            for idx in range(0, 4 * self.num_nodes, 4):
+                nodes_coord.append([float(line[idx]), float(line[idx + 1]), float(line[idx + 2]), float(line[idx + 3])])
+            only_xy_temp = np.array(nodes_coord)
+            only_xy = only_xy_temp[:,(0,1)]
+            only_xy = only_xy.tolist()
             # Compute distance matrix
             W_val = squareform(pdist(nodes_coord, metric='euclidean'))
             
@@ -80,8 +82,7 @@ class GoogleTSPReader(object):
             
             # Convert tour nodes to required format
             # Don't add final connection for tour/cycle
-            tour_nodes = [int(node) - 1 for node in line[line.index('output') + 1:-1]][:-1]
-            
+            tour_nodes = [int(node) - 1 for node in line[line.index('output') + 1: -1]][:-1]
             # Compute node and edge representation of tour + tour_len
             tour_len = 0
             nodes_target = np.zeros(self.num_nodes)
@@ -94,7 +95,7 @@ class GoogleTSPReader(object):
                 edges_target[j][i] = 1
                 tour_len += W_val[i][j]
             
-            # Add final connection of tour in edge target
+            # Add final connection of tour in edge target ====> no_need
             nodes_target[j] = len(tour_nodes) - 1
             edges_target[j][tour_nodes[0]] = 1
             edges_target[tour_nodes[0]][j] = 1

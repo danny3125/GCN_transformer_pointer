@@ -22,7 +22,7 @@ class ResidualGatedGCNModel(nn.Module):
         self.num_nodes = config.num_nodes
         self.node_dim = config.node_dim
         self.voc_nodes_in = config['voc_nodes_in']
-        self.voc_nodes_out = config['num_nodes']  # config['voc_nodes_out']
+        self.voc_nodes_out = config['num_nodes'] #config['voc_nodes_out']   
         self.voc_edges_in = config['voc_edges_in']
         self.voc_edges_out = config['voc_edges_out']
         self.hidden_dim = config['hidden_dim']
