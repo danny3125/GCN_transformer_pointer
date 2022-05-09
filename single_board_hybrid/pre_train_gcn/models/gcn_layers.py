@@ -21,9 +21,9 @@ class BatchNormNode(nn.Module):
         Returns:
             x_bn: Node features after batch normalization (batch_size, num_nodes, hidden_dim)
         """
-        x_trans = x.transpose(1, 2).contiguous()  # Reshape input: (batch_size, hidden_dim, num_nodes)
+        x_trans = x.transpose(1, 2)#.contiguous()  # Reshape input: (batch_size, hidden_dim, num_nodes)
         x_trans_bn = self.batch_norm(x_trans)
-        x_bn = x_trans_bn.transpose(1, 2).contiguous()  # Reshape to original shape
+        x_bn = x_trans_bn.transpose(1, 2)#.contiguous()  # Reshape to original shape
         return x_bn
 
 
@@ -43,9 +43,9 @@ class BatchNormEdge(nn.Module):
         Returns:
             e_bn: Edge features after batch normalization (batch_size, num_nodes, num_nodes, hidden_dim)
         """
-        e_trans = e.transpose(1, 3).contiguous()  # Reshape input: (batch_size, num_nodes, num_nodes, hidden_dim)
+        e_trans = e.transpose(1, 3)#.contiguous()  # Reshape input: (batch_size, num_nodes, num_nodes, hidden_dim)
         e_trans_bn = self.batch_norm(e_trans)
-        e_bn = e_trans_bn.transpose(1, 3).contiguous()  # Reshape to original
+        e_bn = e_trans_bn.transpose(1, 3)#.contiguous()  # Reshape to original
         return e_bn
 
 
