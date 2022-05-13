@@ -137,7 +137,7 @@ class input_handler:
         data_1 = np.array(self.X_all)
         data_1 = np.reshape(data_1,(self.num_rec,self.cornershape,self.dim_of_point))
         for rec in data_1:
-            #rec = np.concatenate((rec,[rec[0]]),axis= 0)
+            rec = np.concatenate((rec,[rec[0]]),axis= 0)
             plt.plot(rec[:, 0], rec[:, 1],color = 'red')
         plt.show()
         
