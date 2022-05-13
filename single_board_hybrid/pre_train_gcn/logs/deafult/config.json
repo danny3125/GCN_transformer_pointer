@@ -5,7 +5,7 @@
     "val_filepath": "./data/tsp25_concorde.txt",
     "test_filepath": "./data/tsp25_concorde.txt",
     "num_nodes": 100,
-    "num_neighbors": 5,
+    "num_neighbors": 8,
     "node_dim": 4,
     "voc_nodes_in": 2,
     "voc_nodes_out": 2,

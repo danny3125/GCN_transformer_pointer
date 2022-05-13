@@ -70,13 +70,14 @@ class GoogleTSPReader(object):
             W_val = squareform(pdist(only_xy, metric='euclidean'))
             for n in range(1, len(only_xy)+1, 4):
                 tar_idx = int(((2*len(only_xy) - n)*(n-1))/2)
-                print(only_xy[n-1])
-                print(only_xy[n])
-                print(only_xy[n+1])
-                print(only_xy[n+2])
-                dis_arr[tar_idx] = 10000
-                dis_arr[tar_idx+1] = 10000
-                dis_arr[tar_idx+2] = 10000
+                tar_idx_1 = int(((2*len(only_xy) - (n + 1))*((n + 1)-1))/2)
+                tar_idx_2 = int(((2*len(only_xy) - (n + 2))*((n + 2)-1))/2)
+                dis_arr[tar_idx] = 10
+                dis_arr[tar_idx+1] = 10
+                dis_arr[tar_idx+2] = 10
+                dis_arr[tar_idx_1] = 10
+                dis_arr[tar_idx_1+1] = 10
+                dis_arr[tar_idx_2] = 10
             W_val_knn = squareform(dis_arr)
             
             # Compute adjacency matrix
