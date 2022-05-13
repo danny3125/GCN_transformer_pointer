@@ -121,16 +121,16 @@ class input_handler:
         self.X_all = []
         for matrix in self.target_metrices[0]:
             rectangle = matrix[0]
-            x_lu = matrix[1]
-            y_lu = matrix[2]
-            x_ru = x_lu + len(rectangle[0])
-            y_ru = y_lu
-            x_ld = x_lu
-            y_ld = y_lu + len(rectangle)
-            x_rd = x_ru 
-            y_rd = y_ld 
+            x_ld = matrix[1]
+            y_ld = matrix[2]
+            x_rd = x_ld + len(rectangle[0])
+            y_rd = y_ld
+            x_lu = x_ld
+            y_lu = y_ld + len(rectangle)
+            x_ru = x_rd 
+            y_ru = y_lu 
             
-            self.X_all.extend([[x_lu,y_lu],[x_ru,y_ru],[x_rd,y_rd],[x_ld,y_ld]])
+            self.X_all.extend([[x_ld,y_ld],[x_rd,y_rd],[x_ru,y_ru],[x_lu,y_lu]])
         return self.X_all
     def final_ver_points(self):
         mask_list_num = [0]

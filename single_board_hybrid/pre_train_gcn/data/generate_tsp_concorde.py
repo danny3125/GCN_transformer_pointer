@@ -6,7 +6,7 @@ import numpy as np
 import yaml
 
 if __name__ == "__main__":
-    num_samples = 100
+    num_samples = 1000
     num_nodes = 25
     node_dim = 4
     # include (x,y,waiting_time, visited_times)

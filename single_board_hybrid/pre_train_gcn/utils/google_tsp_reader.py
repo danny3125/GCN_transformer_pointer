@@ -66,7 +66,18 @@ class GoogleTSPReader(object):
             only_xy = only_xy_temp[:,(0,1)]
             only_xy = only_xy.tolist()
             # Compute distance matrix
-            W_val = squareform(pdist(nodes_coord, metric='euclidean'))
+            dis_arr = pdist(only_xy, metric='euclidean')
+            W_val = squareform(pdist(only_xy, metric='euclidean'))
+            for n in range(1, len(only_xy)+1, 4):
+                tar_idx = int(((2*len(only_xy) - n)*(n-1))/2)
+                print(only_xy[n-1])
+                print(only_xy[n])
+                print(only_xy[n+1])
+                print(only_xy[n+2])
+                dis_arr[tar_idx] = 10000
+                dis_arr[tar_idx+1] = 10000
+                dis_arr[tar_idx+2] = 10000
+            W_val_knn = squareform(dis_arr)
             
             # Compute adjacency matrix
             if self.num_neighbors == -1:
@@ -74,7 +85,7 @@ class GoogleTSPReader(object):
             else:
                 W = np.zeros((self.num_nodes, self.num_nodes))
                 # Determine k-nearest neighbors for each node
-                knns = np.argpartition(W_val, kth=self.num_neighbors, axis=-1)[:, self.num_neighbors::-1]
+                knns = np.argpartition(W_val_knn, kth=self.num_neighbors, axis=-1)[:, self.num_neighbors::-1]
                 # Make connections 
                 for idx in range(self.num_nodes):
                     W[idx][knns[idx]] = 1

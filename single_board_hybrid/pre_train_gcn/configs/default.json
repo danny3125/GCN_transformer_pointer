@@ -18,15 +18,15 @@
   "beam_size": 10,
 
   "hidden_dim": 50,
-  "num_layers": 1,
-  "mlp_layers": 1,
+  "num_layers": 3,
+  "mlp_layers": 2,
   "aggregation": "mean",
 
-  "max_epochs": 10,
+  "max_epochs": 50,
   "val_every": 5,
   "test_every": 10,
 
-  "batch_size": 20,
+  "batch_size": 100,
   "batches_per_epoch": 500,
   "accumulation_steps": 1,
 
