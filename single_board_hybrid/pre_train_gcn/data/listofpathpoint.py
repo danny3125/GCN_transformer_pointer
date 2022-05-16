@@ -269,7 +269,7 @@ class input_handler:
                     else:               # is a left down
                         feature = torch.cat((feature,torch.Tensor([index + 1,index + 0,index + 2])),0)     
         feature = torch.reshape(feature,(B,3))                
-        return feature    
+        return feature,mapping_tool 
           
             
         
