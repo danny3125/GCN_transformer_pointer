@@ -70,7 +70,7 @@ def plot_tsp_heatmap(p, x_coord, W_val, W_pred, title="default"):
         edge_preds = []
         for r in range(len(W)):
             for c in range(len(W)):
-                if W[r][c] > 0.1:
+                if W[r][c] > 0.25:
                      if r != c:
 #                         print('hello, im ',r,'point',c,'edge')
                         pairs.append((r, c))

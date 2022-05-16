@@ -156,12 +156,19 @@ class input_handler:
             #decide how much time a point should be waited until next time it can be visited
             np.random.seed(i)
             visited_time = np.random.choice(range(1,self.visit_time_range),1).tolist()[0]
+            visited_time_count += visited_time
+            mask_list_num.append(visited_time_count)
             # decide how many times a point should be visited
             waiting_time = self.waiting_time_range / 2
             reshape_temp = np.insert(reshape_tool[i], self.dim_of_point, waiting_time, axis=1)
             reshape_temp = np.insert(reshape_temp, self.dim_of_point + 1, visited_time, axis=1)
+            for j in range(visited_time):
+                if j > 0:
+                    waiting_time_list.extend([waiting_time]*self.cornershape)
+                else:
+                    waiting_time_list.extend([0]*self.cornershape)
             output.extend(reshape_temp.tolist())
-        return output
+        return output,mask_list_num,waiting_time_list
     def baseline_points(self):#map_center should be a tuple that represents the split point of ROIs
         #the baseline mode of data structure, which is just adding an extra axis to the point, that
         # is, if a point is going to be visited twice, just split it into two different points, with
