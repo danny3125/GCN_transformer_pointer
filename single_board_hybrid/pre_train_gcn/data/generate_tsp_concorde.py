@@ -10,8 +10,8 @@ if __name__ == "__main__":
     num_nodes = 25
     node_dim = 4
     # include (x,y,waiting_time, visited_times)
-    temp = input_handler('10&15data/25_chips/25_1.json')
-    points = temp.final_ver_points()
+    temp = input_handler('10&15data/25_chips/25_3corners.json')
+    points, a,b = temp.final_ver_points()
     
     opts = f"tsp{num_nodes}_concorde.txt"
     # set_nodes_coord = np.random.random([num_samples, num_nodes, node_dim])
@@ -30,7 +30,7 @@ if __name__ == "__main__":
             f.write( " ".join( str(x)+str(" ")+str(y)+str(" ")+str(waiting_time)+str(" ")+str(visited_time) for x,y,waiting_time,visited_time in nodes_coord) )
             f.write( str(" ") + str('output') + str(" ") )
             'need to read .yaml file to .txt file for representing the ground truth'
-            with open('ground_truth/ground_truth_6230.yaml') as file:
+            with open('ground_truth_3corners/ground_truth_4980.yaml') as file:
                 ground_truth = yaml.load(file, Loader=yaml.FullLoader)
             f.write( str(" ").join( str(node_idx+1) for node_idx in ground_truth) )
             f.write( str(" ") + str(ground_truth[0]+1) + str(" ") )
