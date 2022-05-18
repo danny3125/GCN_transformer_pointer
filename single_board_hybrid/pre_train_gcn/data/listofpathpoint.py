@@ -130,7 +130,7 @@ class input_handler:
             x_ru = x_rd 
             y_ru = y_lu 
             
-            self.X_all.extend([[x_ld,y_ld],[x_rd,y_rd],[x_ru,y_ru],[x_lu,y_lu]])
+            self.X_all.extend([[int(x_ld),int(y_ld)],[int(x_rd),int(y_rd)],[int(x_ru),int(y_ru)],[int(x_lu),int(y_lu)]])
         return self.X_all
     def original_map_present(self):
         self.X_all = input_handler.every_point(self)
