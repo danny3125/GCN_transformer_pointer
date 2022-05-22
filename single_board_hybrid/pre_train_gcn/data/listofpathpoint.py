@@ -147,7 +147,6 @@ class input_handler:
         self.X_central = input_handler.central_point(self)
         visited_time_count = 0
         output = []
-        waiting_time_list = []
         reshape_tool = np.asarray(self.X_all) # X_all.shape = (len(X_all),2)
         reshape_tool = reshape_tool.reshape(((int(len(self.X_all)/self.cornershape)),self.cornershape,\
                                              self.dim_of_point))
@@ -162,13 +161,8 @@ class input_handler:
             waiting_time = self.waiting_time_range / 2
             reshape_temp = np.insert(reshape_tool[i], self.dim_of_point, waiting_time, axis=1)
             reshape_temp = np.insert(reshape_temp, self.dim_of_point + 1, visited_time, axis=1)
-            for j in range(visited_time):
-                if j > 0:
-                    waiting_time_list.extend([waiting_time]*self.cornershape)
-                else:
-                    waiting_time_list.extend([0]*self.cornershape)
             output.extend(reshape_temp.tolist())
-        return output,mask_list_num,waiting_time_list
+        return output,mask_list_num
     def baseline_points(self):#map_center should be a tuple that represents the split point of ROIs
         #the baseline mode of data structure, which is just adding an extra axis to the point, that
         # is, if a point is going to be visited twice, just split it into two different points, with
@@ -215,16 +209,11 @@ class input_handler:
     #def barrier_avoid(self, recent_points):
 
 
-    def outcorner_getout(self,rectangle_inf,B,mask_list_num):# horizontal line = row
+    def outcorner_getout(self,rectangle_inf,B):# horizontal line = row
         feature = torch.Tensor([])
-        mapping_tool = []
         # is odd? is row?
-        for i in range(1,len(mask_list_num)):
-            for j in range(mask_list_num[i]-mask_list_num[i-1]):
-                mapping_tool.append(i-1)
         for inf in rectangle_inf:
-            which_rec = mapping_tool[int(inf)]
-            rectangle = self.target_metrices[0][which_rec][0]
+            rectangle = self.target_metrices[0][int(inf)][0]
             index = 4*int(inf)
             corner = inf - int(inf)
             if len(rectangle) > len(rectangle[0]): # is column the long side?
@@ -269,7 +258,7 @@ class input_handler:
                     else:               # is a left down
                         feature = torch.cat((feature,torch.Tensor([index + 1,index + 0,index + 2])),0)     
         feature = torch.reshape(feature,(B,3))                
-        return feature,mapping_tool 
+        return feature 
           
             
         
