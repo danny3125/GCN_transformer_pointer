@@ -70,9 +70,8 @@ def plot_tsp_heatmap(p, x_coord, W_val, W_pred, title="default"):
         edge_preds = []
         for r in range(len(W)):
             for c in range(len(W)):
-                if W[r][c] > 0.25:
+                if W[r][c] > 2:
                      if r != c:
-#                         print('hello, im ',r,'point',c,'edge')
                         pairs.append((r, c))
                         edge_preds.append(W[r][c])
         return pairs, edge_preds
@@ -118,7 +117,7 @@ def plot_predictions(x_nodes_coord, x_edges, x_edges_values, y_edges, y_pred_edg
         plt.show()
 
 
-def plot_predictions_beamsearch(x_nodes_coord, x_edges, x_edges_values, y_edges, y_pred_edges, bs_nodes, num_plots=3):
+def plot_predictions_beamsearch(x_nodes_coord, x_edges, x_edges_values, y_edges, y_pred_edges, num_plots=3):
     """
     Plots groundtruth TSP tour vs. predicted tours (with beamsearch).
     
@@ -135,6 +134,7 @@ def plot_predictions_beamsearch(x_nodes_coord, x_edges, x_edges_values, y_edges,
     y = F.softmax(y_pred_edges, dim=3)  # B x V x V x voc_edges
     y_bins = y.argmax(dim=3)  # Binary predictions: B x V x V
     y_probs = y[:,:,:,1]  # Prediction probabilities: B x V x V
+    print(y_probs[0][0])
     for f_idx, idx in enumerate(np.random.choice(len(y), num_plots, replace=False)):
         f = plt.figure(f_idx, figsize=(24, 5))
         x_coord = x_nodes_coord[idx].cpu().numpy()
@@ -143,11 +143,8 @@ def plot_predictions_beamsearch(x_nodes_coord, x_edges, x_edges_values, y_edges,
         W_target = y_edges[idx].cpu().numpy()
         W_sol_bins = y_bins[idx].cpu().numpy()
         W_sol_probs = y_probs[idx].cpu().numpy()
-        W_bs = tour_nodes_to_W(bs_nodes[idx].cpu().numpy())
         plt1 = f.add_subplot(131)
         plot_tsp(plt1, x_coord[:,(0,1)], W, W_val, W_target, 'Groundtruth: {:.3f}'.format(W_to_tour_len(W_target, W_val)))
         plt2 = f.add_subplot(132) # plt.figure(f_idx, figsize=(8, 5))
         plot_tsp_heatmap(plt2, x_coord[:,(0,1)], W_val, W_sol_probs, 'Prediction Heatmap')
-        plt3 = f.add_subplot(133)
-        plot_tsp(plt3, x_coord[:,(0,1)], W, W_val, W_bs, 'Beamsearch: {:.3f}'.format(W_to_tour_len(W_bs, W_val)))
         plt.show()
