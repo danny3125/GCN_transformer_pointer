@@ -22,7 +22,7 @@
   "mlp_layers": 2,
   "aggregation": "mean",
 
-  "max_epochs": 60,
+  "max_epochs": 1500,
   "val_every": 5,
   "test_every": 10,
 
