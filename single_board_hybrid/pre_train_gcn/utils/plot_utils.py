@@ -134,8 +134,6 @@ def plot_predictions_beamsearch(x_nodes_coord, x_edges, x_edges_values, y_edges,
     y = F.softmax(y_pred_edges, dim=3)  # B x V x V x voc_edges
     y_bins = y.argmax(dim=3)  # Binary predictions: B x V x V
     y_probs = y[:,:,:,1]  # Prediction probabilities: B x V x V
-    print(y_probs.shape)
-    print(y_probs[0][0])
     for f_idx, idx in enumerate(np.random.choice(len(y), num_plots, replace=False)):
         f = plt.figure(f_idx, figsize=(24, 5))
         x_coord = x_nodes_coord[idx].cpu().numpy()
