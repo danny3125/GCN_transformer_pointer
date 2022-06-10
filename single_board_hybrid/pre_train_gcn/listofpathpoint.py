@@ -154,7 +154,7 @@ class input_handler:
             visited_time_count += visited_time
             mask_list_num.append(visited_time_count)
             # decide how many times a point should be visited
-            waiting_time = self.waiting_time_range / 2
+            waiting_time = 0#self.waiting_time_range / 2
             reshape_temp = np.insert(reshape_tool[i], self.dim_of_point, waiting_time, axis=1)
             reshape_temp = np.insert(reshape_temp, self.dim_of_point + 1, visited_time, axis=1)
             output.extend(reshape_temp.tolist())
