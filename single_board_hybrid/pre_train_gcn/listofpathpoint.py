@@ -136,7 +136,31 @@ class input_handler:
             rec = np.concatenate((rec,[rec[0]]),axis= 0)
             plt.plot(rec[:, 0], rec[:, 1],color = 'red')
         plt.show()
-        
+    def GCN_ver_points(self):
+        mask_list_num = [0]
+        self.X_all = input_handler.every_point(self)
+        self.X_central = input_handler.central_point(self)
+        visited_time_count = 0
+        output = []
+        reshape_tool = np.asarray(self.X_all) # X_all.shape = (len(X_all),2)
+        reshape_tool = reshape_tool.reshape(((int(len(self.X_all)/self.cornershape)),self.cornershape,\
+                                             self.dim_of_point))
+        for i in range(len(reshape_tool)):    # 4*2
+        # decide which region a rectangle should be
+            #decide how much time a point should be waited until next time it can be visited
+            if i < 12:
+                visited_time = 1
+            else:
+                visited_time = 3
+            visited_time_count += visited_time
+            mask_list_num.append(visited_time_count)
+            # decide how many times a point should be visited
+            waiting_time = 0#self.waiting_time_range / 2
+            reshape_temp = np.insert(reshape_tool[i], self.dim_of_point, waiting_time, axis=1)
+            reshape_temp = np.insert(reshape_temp, self.dim_of_point + 1, visited_time, axis=1)
+            output.extend(reshape_temp.tolist())
+        return output, mask_list_num
+
     def final_ver_points(self):
         mask_list_num = [0]
         self.X_all = input_handler.every_point(self)
@@ -158,7 +182,7 @@ class input_handler:
             reshape_temp = np.insert(reshape_tool[i], self.dim_of_point, waiting_time, axis=1)
             reshape_temp = np.insert(reshape_temp, self.dim_of_point + 1, visited_time, axis=1)
             output.extend(reshape_temp.tolist())
-        return output,mask_list_num
+        return output, mask_list_num
     def baseline_points(self):#map_center should be a tuple that represents the split point of ROIs
         #the baseline mode of data structure, which is just adding an extra axis to the point, that
         # is, if a point is going to be visited twice, just split it into two different points, with
