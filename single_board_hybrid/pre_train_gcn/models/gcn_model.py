@@ -69,7 +69,7 @@ class ResidualGatedGCNModel(nn.Module):
             x, e = self.gcn_layers[layer](x, e)  # B x V x H, B x V x V x H
         # MLP classifier
         y_pred_edges = self.mlp_edges(e)  # B x V x V x voc_edges_out
-        # y_pred_nodes = self.mlp_nodes(x)  # B x V x voc_nodes_out
+#         y_pred_nodes = self.mlp_nodes(x)  # B x V x voc_nodes_out
         
         # Compute loss
         edge_cw = torch.Tensor(edge_cw).type(self.dtypeFloat)  # Convert to tensors

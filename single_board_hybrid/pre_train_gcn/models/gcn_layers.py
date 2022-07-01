@@ -158,7 +158,7 @@ class MLP(nn.Module):
     """Multi-layer Perceptron for output prediction.
     """
 
-    def __init__(self, hidden_dim, output_dim, L=2):
+    def __init__(self, hidden_dim, output_dim, L=4):
         super(MLP, self).__init__()
         self.L = L
         U = []

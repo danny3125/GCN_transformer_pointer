@@ -148,10 +148,12 @@ class input_handler:
         for i in range(len(reshape_tool)):    # 4*2
         # decide which region a rectangle should be
             #decide how much time a point should be waited until next time it can be visited
-            if i < 12:
+            if i < 17:
                 visited_time = 1
             else:
-                visited_time = 3
+                visited_time = 4
+                # np.random.seed(i)
+                # visited_time = np.random.choice(range(1, self.visit_time_range), 1).tolist()[0]
             visited_time_count += visited_time
             mask_list_num.append(visited_time_count)
             # decide how many times a point should be visited
