@@ -9,7 +9,7 @@ class input_handler:
         self.X_all = []
         self.X_central = []
         self.waiting_time_range = 10
-        self.visit_time_range = 4
+        self.visit_time_range = 3
         self.cornershape = 4
         self.dim_of_point = 2
         self.num_rec = 25
@@ -25,9 +25,18 @@ class input_handler:
         plt.plot(data[:, 0], data[:, 1],color = 'black')
         data_1 = np.array(self.X_all)
         data_1 = np.reshape(data_1,(self.num_rec,self.cornershape,self.dim_of_point))
+        color_index = 1
         for rec in data_1:
             rec = np.concatenate((rec,[rec[0]]),axis= 0)
-            plt.plot(rec[:, 0], rec[:, 1],color = 'red')
+            if (mask_list_num[color_index]-mask_list_num[color_index-1]) == 1:
+                plt.plot(rec[:, 0], rec[:, 1], color='red')
+            elif (mask_list_num[color_index] - mask_list_num[color_index - 1]) == 2:
+                plt.plot(rec[:, 0], rec[:, 1], color='blue')
+            elif (mask_list_num[color_index] - mask_list_num[color_index - 1]) == 3:
+                plt.plot(rec[:, 0], rec[:, 1], color='green')
+            else:
+                plt.plot(rec[:, 0], rec[:, 1], color='yellow')
+            color_index+=1
         plt.show()
         '''
         for index in path_corners_index: #find the longer side => zig-zag to end point
